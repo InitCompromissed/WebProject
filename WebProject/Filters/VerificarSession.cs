@@ -22,7 +22,7 @@ namespace WebProject.Filters
                 {
 
 
-                    if (filterContext.Controller is AccesoController == false)
+                    if (filterContext.Controller is AccessController == false)
                     {
                         filterContext.HttpContext.Response.Redirect("/Acceso/Login");
                     }

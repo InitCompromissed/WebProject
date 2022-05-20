@@ -1,0 +1,4 @@
+C:\Users\Niochet\source\repos\WebProject\WebProject\obj\Debug\ProductsCatalog.csproj.AssemblyReference.cache
+C:\Users\Niochet\source\repos\WebProject\WebProject\obj\Debug\ProductsCatalog.csproj.CoreCompileInputs.cache
+C:\Users\Niochet\source\repos\WebProject\WebProject\obj\Debug\WebProject.dll
+C:\Users\Niochet\source\repos\WebProject\WebProject\obj\Debug\WebProject.pdb

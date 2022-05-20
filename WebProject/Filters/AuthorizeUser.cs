@@ -11,7 +11,6 @@ namespace WebProject.Filters
     public class AuthorizeUser : AuthorizeAttribute
     {
         private usuario oUsuario;
-        private SistemaEntities db = new SistemaEntities();
         private int idOperacion;
 
         public AuthorizeUser(int idOperacion = 0)
@@ -26,59 +25,75 @@ namespace WebProject.Filters
             String nombreModulo = "";
             try
             {
-                oUsuario = (usuario)HttpContext.Current.Session["User"];
-                var lstMisOperaciones = from m in db.rol_operacion
-                                        where m.idRol == oUsuario.idRol
-                                            && m.idOperacion == idOperacion
-                                        select m;
-
-
-                if (lstMisOperaciones.ToList().Count() == 0)
+                using (var db = new Models.ProductEntities())
                 {
-                    var oOperacion = db.operaciones.Find(idOperacion);
-                    int? idModulo = oOperacion.idModulo;
-                    nombreOperacion = getNombreDeOperacion(idOperacion);
-                    nombreModulo = getNombreDelModulo(idModulo);
-                    filterContext.Result = new RedirectResult("~/Error/UnauthorizedOperation?operacion=" + nombreOperacion + "&modulo=" + nombreModulo + "&msjeErrorExcepcion=");
+                    oUsuario = (usuario)HttpContext.Current.Session["User"];
+                    var lstMisOperaciones = from m in db.rol_operacion
+                                            where m.idRol == oUsuario.idRol
+                                                && m.idOperacion == idOperacion
+                                            select m;
+
+                    if (lstMisOperaciones.ToList().Count() == 0)
+                    {
+                        var oOperacion = db.operaciones.Find(idOperacion);
+                        int? idModulo = oOperacion.idModulo;
+                        nombreOperacion = getNombreDeOperacion(idOperacion);
+                        nombreModulo = getNombreDelModulo(idModulo);
+                        filterContext.Result = new RedirectResult("~/Error/UnauthorizedOperation?operacion=" + nombreOperacion + "&modulo=" + nombreModulo + "&msjeErrorExcepcion=");
+                    }
                 }
+
             }
             catch (Exception ex)
             {
                 filterContext.Result = new RedirectResult("~/Error/UnauthorizedOperation?operacion=" + nombreOperacion + "&modulo=" + nombreModulo + "&msjeErrorExcepcion=" + ex.Message);
             }
         }
+
         public string getNombreDeOperacion(int idOperacion)
         {
-            var ope = from op in db.operaciones
-                      where op.id == idOperacion
-                      select op.nombre;
-            String nombreOperacion;
-            try
+            using (var db = new Models.ProductEntities())
             {
-                nombreOperacion = ope.First();
+                var ope = from op in db.operaciones
+                          where op.id == idOperacion
+                          select op.nombre;
+
+                String nombreOperacion;
+
+                try
+                {
+                    nombreOperacion = ope.First();
+                }
+                catch (Exception)
+                {
+                    nombreOperacion = "";
+                }
+
+                return nombreOperacion;
             }
-            catch (Exception)
-            {
-                nombreOperacion = "";
-            }
-            return nombreOperacion;
         }
 
         public string getNombreDelModulo(int? idModulo)
         {
-            var modulo = from m in db.modulo
+            using (var db = new Models.ProductEntities())
+            {
+                var modulo = from m in db.modulo
                          where m.id == idModulo
                          select m.nombre;
-            String nombreModulo;
-            try
-            {
-                nombreModulo = modulo.First();
+
+                String nombreModulo;
+
+                try
+                {
+                    nombreModulo = modulo.First();
+                }
+                catch (Exception)
+                {
+                    nombreModulo = "";
+                }
+
+                return nombreModulo;
             }
-            catch (Exception)
-            {
-                nombreModulo = "";
-            }
-            return nombreModulo;
         }
     }
 }

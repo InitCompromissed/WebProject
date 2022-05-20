@@ -1,12 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="SistemaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="SistemaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="modulo" EntityType="SistemaModel.modulo" />
+    <EntitySet Name="operaciones" EntityType="SistemaModel.operaciones" />
+    <EntitySet Name="rol" EntityType="SistemaModel.rol" />
+    <EntitySet Name="rol_operacion" EntityType="SistemaModel.rol_operacion" />
+    <EntitySet Name="sysdiagrams" EntityType="SistemaModel.sysdiagrams" />
+    <EntitySet Name="usuario" EntityType="SistemaModel.usuario" />
+    <AssociationSet Name="FK_operaciones_modulo" Association="SistemaModel.FK_operaciones_modulo">
+      <End Role="modulo" EntitySet="modulo" />
+      <End Role="operaciones" EntitySet="operaciones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_rol_operacion_operaciones" Association="SistemaModel.FK_rol_operacion_operaciones">
+      <End Role="operaciones" EntitySet="operaciones" />
+      <End Role="rol_operacion" EntitySet="rol_operacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_rol_operacion_rol" Association="SistemaModel.FK_rol_operacion_rol">
+      <End Role="rol" EntitySet="rol" />
+      <End Role="rol_operacion" EntitySet="rol_operacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_usuario_rol" Association="SistemaModel.FK_usuario_rol">
+      <End Role="rol" EntitySet="rol" />
+      <End Role="usuario" EntitySet="usuario" />
+    </AssociationSet>
+  </EntityContainer>
   <EntityType Name="modulo">
     <Key>
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="operaciones" Relationship="Self.FK_operaciones_modulo" FromRole="modulo" ToRole="operaciones" />
+    <NavigationProperty Name="operaciones" Relationship="SistemaModel.FK_operaciones_modulo" FromRole="modulo" ToRole="operaciones" />
   </EntityType>
   <EntityType Name="operaciones">
     <Key>
@@ -15,8 +39,8 @@
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="idModulo" Type="Int32" />
-    <NavigationProperty Name="modulo" Relationship="Self.FK_operaciones_modulo" FromRole="operaciones" ToRole="modulo" />
-    <NavigationProperty Name="rol_operacion" Relationship="Self.FK_rol_operacion_operaciones" FromRole="operaciones" ToRole="rol_operacion" />
+    <NavigationProperty Name="modulo" Relationship="SistemaModel.FK_operaciones_modulo" FromRole="operaciones" ToRole="modulo" />
+    <NavigationProperty Name="rol_operacion" Relationship="SistemaModel.FK_rol_operacion_operaciones" FromRole="operaciones" ToRole="rol_operacion" />
   </EntityType>
   <EntityType Name="rol">
     <Key>
@@ -24,8 +48,8 @@
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="rol_operacion" Relationship="Self.FK_rol_operacion_rol" FromRole="rol" ToRole="rol_operacion" />
-    <NavigationProperty Name="usuario" Relationship="Self.FK_usuario_rol" FromRole="rol" ToRole="usuario" />
+    <NavigationProperty Name="rol_operacion" Relationship="SistemaModel.FK_rol_operacion_rol" FromRole="rol" ToRole="rol_operacion" />
+    <NavigationProperty Name="usuario" Relationship="SistemaModel.FK_usuario_rol" FromRole="rol" ToRole="usuario" />
   </EntityType>
   <EntityType Name="rol_operacion">
     <Key>
@@ -34,14 +58,14 @@
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="idRol" Type="Int32" />
     <Property Name="idOperacion" Type="Int32" />
-    <NavigationProperty Name="operaciones" Relationship="Self.FK_rol_operacion_operaciones" FromRole="rol_operacion" ToRole="operaciones" />
-    <NavigationProperty Name="rol" Relationship="Self.FK_rol_operacion_rol" FromRole="rol_operacion" ToRole="rol" />
+    <NavigationProperty Name="operaciones" Relationship="SistemaModel.FK_rol_operacion_operaciones" FromRole="rol_operacion" ToRole="operaciones" />
+    <NavigationProperty Name="rol" Relationship="SistemaModel.FK_rol_operacion_rol" FromRole="rol_operacion" ToRole="rol" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
       <PropertyRef Name="diagram_id" />
     </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="principal_id" Type="Int32" Nullable="false" />
     <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="version" Type="Int32" />
@@ -57,11 +81,11 @@
     <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="ingreso" Type="DateTime" Precision="3" />
     <Property Name="idRol" Type="Int32" />
-    <NavigationProperty Name="rol" Relationship="Self.FK_usuario_rol" FromRole="usuario" ToRole="rol" />
+    <NavigationProperty Name="rol" Relationship="SistemaModel.FK_usuario_rol" FromRole="usuario" ToRole="rol" />
   </EntityType>
   <Association Name="FK_operaciones_modulo">
-    <End Role="modulo" Type="Self.modulo" Multiplicity="0..1" />
-    <End Role="operaciones" Type="Self.operaciones" Multiplicity="*" />
+    <End Type="SistemaModel.modulo" Role="modulo" Multiplicity="0..1" />
+    <End Type="SistemaModel.operaciones" Role="operaciones" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="modulo">
         <PropertyRef Name="id" />
@@ -72,8 +96,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_rol_operacion_operaciones">
-    <End Role="operaciones" Type="Self.operaciones" Multiplicity="0..1" />
-    <End Role="rol_operacion" Type="Self.rol_operacion" Multiplicity="*" />
+    <End Type="SistemaModel.operaciones" Role="operaciones" Multiplicity="0..1" />
+    <End Type="SistemaModel.rol_operacion" Role="rol_operacion" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="operaciones">
         <PropertyRef Name="id" />
@@ -84,8 +108,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_rol_operacion_rol">
-    <End Role="rol" Type="Self.rol" Multiplicity="0..1" />
-    <End Role="rol_operacion" Type="Self.rol_operacion" Multiplicity="*" />
+    <End Type="SistemaModel.rol" Role="rol" Multiplicity="0..1" />
+    <End Type="SistemaModel.rol_operacion" Role="rol_operacion" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="rol">
         <PropertyRef Name="id" />
@@ -96,8 +120,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_usuario_rol">
-    <End Role="rol" Type="Self.rol" Multiplicity="0..1" />
-    <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+    <End Type="SistemaModel.rol" Role="rol" Multiplicity="0..1" />
+    <End Type="SistemaModel.usuario" Role="usuario" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="rol">
         <PropertyRef Name="id" />
@@ -107,28 +131,4 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="SistemaEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="modulo" EntityType="Self.modulo" />
-    <EntitySet Name="operaciones" EntityType="Self.operaciones" />
-    <EntitySet Name="rol" EntityType="Self.rol" />
-    <EntitySet Name="rol_operacion" EntityType="Self.rol_operacion" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-    <EntitySet Name="usuario" EntityType="Self.usuario" />
-    <AssociationSet Name="FK_operaciones_modulo" Association="Self.FK_operaciones_modulo">
-      <End Role="modulo" EntitySet="modulo" />
-      <End Role="operaciones" EntitySet="operaciones" />
-    </AssociationSet>
-    <AssociationSet Name="FK_rol_operacion_operaciones" Association="Self.FK_rol_operacion_operaciones">
-      <End Role="operaciones" EntitySet="operaciones" />
-      <End Role="rol_operacion" EntitySet="rol_operacion" />
-    </AssociationSet>
-    <AssociationSet Name="FK_rol_operacion_rol" Association="Self.FK_rol_operacion_rol">
-      <End Role="rol" EntitySet="rol" />
-      <End Role="rol_operacion" EntitySet="rol_operacion" />
-    </AssociationSet>
-    <AssociationSet Name="FK_usuario_rol" Association="Self.FK_usuario_rol">
-      <End Role="rol" EntitySet="rol" />
-      <End Role="usuario" EntitySet="usuario" />
-    </AssociationSet>
-  </EntityContainer>
 </Schema>

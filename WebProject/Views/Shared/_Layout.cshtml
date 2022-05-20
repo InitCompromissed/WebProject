@@ -1,33 +1,152 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link type="text/css" href="" rel="stylesheet" />
+    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-3.4.1.min.js"></script>
+
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Nombre de la aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
-                </ul>
-            </div>
+
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand">Navbar</a>
+        <div>
+            <a href="#">@Html.ActionLink("Inicio", "Index", "Home")</a>
         </div>
-    </div>
+        <div>
+            <a href="#">@Html.ActionLink("Acerca de", "About", "Home")</a>
+        </div>
+        <div>
+            <a href="#">@Html.ActionLink("Contacto", "Contact", "Home")</a>
+        </div>
+        <div>
+            <a href="#">@Html.ActionLink("Productos", "Index", "Products")</a>
+        </div>
+        <div class="d-flex justify-content-end">
+            <input class="form-control mr-sm-2 mr-lg-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0 ml-lg-2" type="submit">Search</button>
+        </div>
+
+
+    </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @*<ul class="nav justify-content-center">
+        <li class="nav-item">
+            <div class="nav-link active">
+                @Html.ActionLink("Inicio", "Index", "Home")
+            </div>
+        </li>
+        <li class="nav-item">
+            <div class="nav-link active">
+                @Html.ActionLink("Acerca de", "About", "Home")
+            </div>
+        </li>
+        <li class="nav-item">
+            <div class="nav-link active" style="text-decoration: none;">
+                @Html.ActionLink("Contacto", "Contact", "Home")
+            </div>
+        </li>
+        <li class="nav-item">
+            <div class="nav-link active" style="text-decoration: none;">
+                @Html.ActionLink("Productos", "Index", "Products")
+            </div>
+        </li>
+    </ul>*@
+
+
+
+    @*
+        ----------------------------------------------------------------
+                              SEGUNDA PRUEBA
+        ----------------------------------------------------------------
+
+        @*<ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <div class="nav-link active">
+                        @Html.ActionLink("Inicio", "Index", "Home")
+                    </div>
+
+                </li>
+                <li class="nav-item">
+                    <div class="nav-link active">
+                        @Html.ActionLink("Acerca de", "About", "Home")
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-link active">
+                        @Html.ActionLink("Contacto", "Contact", "Home")
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+        ----------------------------------------------------------------
+                              SEGUNDA PRUEBA
+        ----------------------------------------------------------------
+    *@
+
+
+    @*
+
+        ----------------------------------------------------------------
+                                PRIMERA PRUEBA
+        ----------------------------------------------------------------
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("Nombre de la aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        ----------------------------------------------------------------
+                                PRIMERA PRUEBA
+        ----------------------------------------------------------------
+    *@
+
+
+
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -37,7 +156,6 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>
